@@ -9,6 +9,10 @@ async function getUsers() {
   let outputUsers = "";
   data.forEach((user) => (outputUsers += `${user.username} `));
   output.innerText = outputUsers;
+  // getting response headers from response object
+  for (let [key, value] of response.headers) {
+    console.log(`${key} = ${value}`)
+  }
 }
 
 async function getPosts() {
