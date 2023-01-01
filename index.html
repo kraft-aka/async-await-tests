@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
+
 <body>
-  <h1>Promise</h1>
-  <button id="get-users">get users</button>
-  <button id="get-posts">get posts</button>
+  <h1>Promise/Async/Await</h1>
+  <div class="container">
+    <button id="get-users">get users</button>
+    <button id="get-posts">get posts</button>
+    <button id="post-send">send post</button>
+    <button id="get-products">get products</button>
+    <button id="to-speech" disabled>speak</button>
+    <div class="post">
+      <form action="">
+        <input type="text" id="post-title" placeholder="Title"> <br>
+        <textarea name="post-body" id="post-body" cols="30" rows="10" placeholder="Body"></textarea>
+      </form>
+    </div>
+    <hr>
+  </div>
   <div id="output"></div>
   <script src="index.js"></script>
 </body>
