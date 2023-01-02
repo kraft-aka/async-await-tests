@@ -6,7 +6,8 @@ const speakBtn = document.querySelector("#to-speech");
 const output = document.querySelector("#output");
 const getOnePostBtn = document.querySelector("#get-one-post");
 const updatePostBtn = document.querySelector("#update-post");
-const deletePostBtn = document.querySelector('#delete-post');
+const deletePostBtn = document.querySelector("#delete-post");
+const getUserPostBtn = document.querySelector("#get-user-post");
 const text = document.querySelector("#post-body").value;
 
 function speakPost() {
@@ -32,6 +33,18 @@ async function getUsers() {
     console.log(`${key} = ${value}`);
   }
 }
+
+// get posts of one user by id
+const getUserPost = (idx) => {
+  let id = document.querySelector("#num").value;
+  return fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data)) //data.map(item=> output.innerHTML = `<div class="post-body"><li>id: ${item.id} title: ${item.title}</li></div>`))//(output.innerHTML = `<div class="post-body"><li>id: ${data.id} title: ${data.title}</li></div>`))
+    .catch((err) => console.log("Error: ", err))
+    .finally(() => console.log("done"));
+};
 
 // gets all posts
 async function getPosts() {
@@ -102,26 +115,29 @@ const updatePost = (e, id) => {
     },
     body: JSON.stringify({ body, title }),
   })
-  .then((response) => response.json())
-  .then(
-    (data) =>
-    (output.innerHTML = `<div class="post-body"> <h2>${data.title}</h2>  <p>${data.body}</p> <p>id: ${data.id}</p> </div>`)
+    .then((response) => response.json())
+    .then(
+      (data) =>
+        (output.innerHTML = `<div class="post-body"> <h2>${data.title}</h2>  <p>${data.body}</p> <p>id: ${data.id}</p> </div>`)
     )
     .catch((err) => console.log("Error: ", err));
-  };
-  
-  // delete one post
-  const deletePost=(id)=> {
-    let idx = document.querySelector("#num").value;
-    return fetch(`https://jsonplaceholder.typicode.com/posts/${idx}`, {
-      method: 'DELETE',
-    }).then(response=> response.json())
-    .then(data=> (output.innerHTML = '<div class="post-body"><p>Post has been deleted</p></div>'))
-    .catch(err=> console.log('Error: ', err))
-    .finally(data=>console.log('deleted'))
-    
+};
 
-}
+// delete one post
+const deletePost = (id) => {
+  let idx = document.querySelector("#num").value;
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${idx}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then(
+      (data) =>
+        (output.innerHTML =
+          '<div class="post-body"><p>Post has been deleted</p></div>')
+    )
+    .catch((err) => console.log("Error: ", err))
+    .finally((data) => console.log("deleted"));
+};
 
 async function getProducts() {
   const response = await fetch("https://fakestoreapi.com/products");
@@ -149,4 +165,5 @@ btnGetProducts.addEventListener("click", getProducts);
 speakBtn.addEventListener("click", speakPost);
 getOnePostBtn.addEventListener("click", getOnePost);
 updatePostBtn.addEventListener("click", updatePost);
-deletePostBtn.addEventListener('click', deletePost);
+deletePostBtn.addEventListener("click", deletePost);
+getUserPostBtn.addEventListener("click", getUserPost);
