@@ -4,15 +4,17 @@ const btnSendPost = document.querySelector("#post-send");
 const btnGetProducts = document.querySelector("#get-products");
 const speakBtn = document.querySelector("#to-speech");
 const output = document.querySelector("#output");
-const text = document.querySelector('#post-body').value;
+const getOnePostBtn = document.querySelector("#get-one-post");
+const text = document.querySelector("#post-body").value;
+
 
 function speakPost() {
-  if('speechSynthesis' in window) {
+  if ("speechSynthesis" in window) {
     const msg = new SpeechSynthesisUtterance();
     msg.text = text;
     window.speechSynthesis.speak(msg);
   } else {
-    output.innerHTML = 'Sorry your browser doesn\'t support text to speech'
+    output.innerHTML = "Sorry your browser doesn't support text to speech";
   }
 }
 
@@ -32,7 +34,7 @@ async function getUsers() {
 async function getPosts() {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
   const data = await response.json();
-  console.log(data);
+  console.log(data.length);
   let outputPosts = [];
   data.forEach((post) =>
     outputPosts.push(`
@@ -68,6 +70,21 @@ function publishPost(e) {
   }
 }
 
+// gets one post by id
+const getOnePost = (e) => {
+  let idx = document.querySelector("#num").value;
+  e.preventDefault();
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${idx}`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(
+      (data) =>
+        (output.innerHTML = `<div class="post-body"> <h2>${data.title}</h2>  <p>${data.body}</p> <p>id: ${data.id}</p> </div>`)
+    )
+    .catch((err) => console.log("Error: ", err));
+};
+
 async function getProducts() {
   const response = await fetch("https://fakestoreapi.com/products");
   const data = await response.json();
@@ -92,3 +109,4 @@ btnPosts.addEventListener("click", getPosts);
 btnSendPost.addEventListener("click", publishPost);
 btnGetProducts.addEventListener("click", getProducts);
 speakBtn.addEventListener("click", speakPost);
+getOnePostBtn.addEventListener("click", getOnePost);

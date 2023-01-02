@@ -17,8 +17,11 @@
     <button id="post-send">send post</button>
     <button id="get-products">get products</button>
     <button id="to-speech" disabled>speak</button>
+    <button id="get-one-post">get one post</button>
     <div class="post">
       <form action="">
+        <label for="num">Number </label>
+        <input type="number" id="num" name="num" min="1" max="100">
         <input type="text" id="post-title" placeholder="Title"> <br>
         <textarea name="post-body" id="post-body" cols="30" rows="10" placeholder="Body"></textarea>
       </form>
